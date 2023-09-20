@@ -12,7 +12,7 @@ class UserController
 {
     public function login()
     {
-        if(Auth::isAuth()){
+        if (Auth::isAuth()) {
             Router::redirect("/profile");
             return false;
         }
@@ -22,7 +22,7 @@ class UserController
 
     public function register()
     {
-        if(Auth::isAuth()){
+        if (Auth::isAuth()) {
             Router::redirect("/profile");
             return false;
         }
@@ -32,7 +32,7 @@ class UserController
 
     public function profile()
     {
-        if(!Auth::isAuth()){
+        if (!Auth::isAuth()) {
             Router::redirect("/login");
             return false;
         }
@@ -42,7 +42,7 @@ class UserController
 
     public function createuser($userData)
     {
-        if(Auth::isAuth()){
+        if (Auth::isAuth()) {
             Router::redirect("/profile");
             return false;
         }
@@ -50,7 +50,7 @@ class UserController
 
         $validation = UserValidator::registerValidate($userData);
 
-        if(!$validation){
+        if (!$validation) {
             Router::redirect("/register");
             return false;
         }
@@ -72,7 +72,7 @@ class UserController
 
     public function logout()
     {
-        if(!Auth::isAuth()){
+        if (!Auth::isAuth()) {
             Router::redirect("/login");
             return false;
         }
@@ -80,5 +80,23 @@ class UserController
         Auth::logout();
 
         Router::redirect("/");
+    }
+
+    public function auth($userData)
+    {
+        $user = User::where([
+            "email" => $userData["email"],
+            "password" => md5($userData["password"])
+        ], ["id"]);
+
+        if (empty($user)) {
+            $_SESSION["login-messages"][] = "Введены неверные данные";
+            Router::redirect("/login");
+            return false;
+        }
+
+        Auth::auth($user[0]->id);
+        Router::redirect("/profile");
+        return true;
     }
 }
