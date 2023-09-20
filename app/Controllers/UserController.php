@@ -8,6 +8,16 @@ class UserController
 {
     public function login()
     {
-        Viewer::view('test');
+        Viewer::view('login');
+    }
+
+    public function register()
+    {
+        Viewer::view('register');
+    }
+
+    public function profile()
+    {
+        Viewer::view('profile');
     }
 }
