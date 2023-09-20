@@ -7,6 +7,11 @@ use service\Validator;
 
 class UserValidator extends Validator
 {
+    /**
+     * Проверка данных при регистрации
+     * @param $userData
+     * @return bool
+     */
     public static function registerValidate($userData): bool
     {
         $isValidated = true;

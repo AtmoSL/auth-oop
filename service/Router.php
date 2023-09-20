@@ -6,6 +6,13 @@ class Router
 {
     private static $links = [];
 
+    /**
+     * Добавление URL в список
+     * @param $uri
+     * @param $controller
+     * @param $action
+     * @return void
+     */
     public static function addRoute($uri, $controller, $action)
     {
         self::$links[$uri] = [
@@ -15,6 +22,13 @@ class Router
         ];
     }
 
+    /**
+     * Добавление URL с методом POST в список
+     * @param $uri
+     * @param $controller
+     * @param $action
+     * @return void
+     */
     public static function post($uri, $controller, $action)
     {
         self::$links[$uri] = [
@@ -24,6 +38,10 @@ class Router
         ];
     }
 
+    /**
+     * Ревлизация маршрутов
+     * @return void
+     */
     public static function start()
     {
         $route = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
@@ -45,6 +63,11 @@ class Router
         }
     }
 
+    /**
+     * Перенаправление на другой URL
+     * @param $uri
+     * @return void
+     */
     public static function redirect($uri)
     {
         header("location: ". $uri);

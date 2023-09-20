@@ -10,6 +10,10 @@ use service\Viewer;
 
 class UserController
 {
+    /**
+     * Страница входа
+     * @return false|void
+     */
     public function login()
     {
         if (Auth::isAuth()) {
@@ -20,6 +24,10 @@ class UserController
         Viewer::view('login');
     }
 
+    /**
+     * Страница регистрации
+     * @return false|void
+     */
     public function register()
     {
         if (Auth::isAuth()) {
@@ -30,6 +38,10 @@ class UserController
         Viewer::view('register');
     }
 
+    /**
+     * Страница профиля
+     * @return false|void
+     */
     public function profile()
     {
         if (!Auth::isAuth()) {
@@ -42,6 +54,11 @@ class UserController
         Viewer::view('profile', compact('user'));
     }
 
+    /**
+     * Регистрация пользователя
+     * @param $userData
+     * @return bool
+     */
     public function createuser($userData)
     {
         if (Auth::isAuth()) {
@@ -72,6 +89,10 @@ class UserController
         return true;
     }
 
+    /**
+     * Выход из аккаунта
+     * @return false|void
+     */
     public function logout()
     {
         if (!Auth::isAuth()) {
@@ -84,6 +105,11 @@ class UserController
         Router::redirect("/");
     }
 
+    /**
+     * Вход в аккаунт
+     * @param $userData
+     * @return bool
+     */
     public function auth($userData)
     {
         $user = User::where([

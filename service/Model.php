@@ -5,6 +5,12 @@ namespace service;
 class Model
 {
     static string $table;
+
+    /**
+     * Создание поля в таблице
+     * @param $data
+     * @return void
+     */
     public static function create($data)
     {
         $table = static::$table;
@@ -26,6 +32,12 @@ class Model
         DataBase::query($sql);
     }
 
+    /**
+     * Получение объектов из таблицы по условию
+     * @param array $where
+     * @param $fields
+     * @return mixed
+     */
     public static function where(array $where, $fields = ["*"])
     {
         $table = static::$table;
