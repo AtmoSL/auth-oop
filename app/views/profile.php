@@ -1,6 +1,6 @@
 <?php include 'layouts/header.php';
 /** @var \app\Models\User $user */
-1?>
+?>
 
     <div class="container">
         <h1>Профиль</h1>
