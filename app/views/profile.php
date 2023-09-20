@@ -1,7 +1,17 @@
-<?php include 'layouts/header.php' ?>
+<?php include 'layouts/header.php';
+/** @var \app\Models\User $user */
+1?>
 
     <div class="container">
-        <h1>Пользователь с id <?= $_SESSION["auth"]["user_id"] ?></h1>
+        <h1>Профиль</h1>
+        <table>
+            <tr>
+                <td>Имя: </td><td><?= $user->name ?></td>
+            </tr>
+            <tr>
+                <td>Email: </td><td><?= $user->email ?></td>
+            </tr>
+        </table>
     </div>
 
 <?php include 'layouts/footer.php' ?>

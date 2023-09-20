@@ -37,7 +37,9 @@ class UserController
             return false;
         }
 
-        Viewer::view('profile');
+        $user = User::where(["id" => Auth::getId()], ["name", "email"])[0];
+
+        Viewer::view('profile', compact('user'));
     }
 
     public function createuser($userData)

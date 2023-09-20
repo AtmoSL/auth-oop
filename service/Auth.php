@@ -19,4 +19,9 @@ class Auth
     {
         unset($_SESSION['auth']);
     }
+
+    public static function getId()
+    {
+        return $_SESSION['auth']['user_id'];
+    }
 }
