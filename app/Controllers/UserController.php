@@ -3,6 +3,8 @@
 namespace app\Controllers;
 
 use app\Models\User;
+use app\Validators\UserValidator;
+use service\Router;
 use service\Viewer;
 
 class UserController
@@ -20,5 +22,24 @@ class UserController
     public function profile()
     {
         Viewer::view('profile');
+    }
+
+    public function createuser($userData)
+    {
+        array_map("trim", $userData);
+
+        $validation = UserValidator::registerValidate($userData);
+
+        if(!$validation){
+            header("location: /register");
+            return false;
+        }
+
+        unset($userData["password-repeat"]);
+        $userData["password"] = md5($userData["password"]);
+
+
+        User::create($userData);
+        header("location: /");
     }
 }

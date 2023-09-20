@@ -10,4 +10,5 @@ $loader = new Loader();
 spl_autoload_register([$loader, 'load']);
 
 require_once 'app/routes.php';
+session_start();
 Router::start();

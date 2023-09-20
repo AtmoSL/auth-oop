@@ -25,4 +25,28 @@ class Model
 
         DataBase::query($sql);
     }
+
+    public static function where(array $where, $fields = ["*"])
+    {
+        $table = static::$table;
+        $whereStr = '';
+
+        if($fields===["*"]){
+            $fieldsSTR = "*";
+        }else{
+            $fieldsSTR = " " . $table . "." . implode(",", $fields);
+        }
+
+
+        foreach ($where as $whereField => $whereValue) {
+            $whereStr .= static::$table . "." . $whereField . "= '" . $whereValue . "'". (($whereValue != end($where)) ? " AND " : "");
+        }
+
+        $sql = "SELECT " . $fieldsSTR . " FROM " . static::$table . " WHERE " . $whereStr ;
+
+        $stmt = DataBase::query($sql);
+
+
+        return $stmt->fetchAll(\PDO::FETCH_CLASS);
+    }
 }
