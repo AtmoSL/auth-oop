@@ -13,7 +13,7 @@ class UserController
     public function login()
     {
         if(Auth::isAuth()){
-            header("location: /profile");
+            Router::redirect("/profile");
             return false;
         }
 
@@ -23,7 +23,7 @@ class UserController
     public function register()
     {
         if(Auth::isAuth()){
-            header("location: /profile");
+            Router::redirect("/profile");
             return false;
         }
 
@@ -33,7 +33,7 @@ class UserController
     public function profile()
     {
         if(!Auth::isAuth()){
-            header("location: /login");
+            Router::redirect("/login");
             return false;
         }
 
@@ -43,7 +43,7 @@ class UserController
     public function createuser($userData)
     {
         if(Auth::isAuth()){
-            header("location: /profile");
+            Router::redirect("/profile");
             return false;
         }
         array_map("trim", $userData);
@@ -51,7 +51,7 @@ class UserController
         $validation = UserValidator::registerValidate($userData);
 
         if(!$validation){
-            header("location: /register");
+            Router::redirect("/register");
             return false;
         }
 
@@ -66,5 +66,19 @@ class UserController
         Auth::auth($user[0]->id);
 
         header("location: /profile");
+
+        return true;
+    }
+
+    public function logout()
+    {
+        if(!Auth::isAuth()){
+            Router::redirect("/login");
+            return false;
+        }
+
+        Auth::logout();
+
+        Router::redirect("/");
     }
 }
