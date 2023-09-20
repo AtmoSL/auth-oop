@@ -28,6 +28,10 @@ class UserValidator extends Validator
             $_SESSION["register-messages"][] = "Email указан некорректно";
             $isValidated = false;
         }
+        if (!self::isOnlyLetters($userData["name"])) {
+            $_SESSION["register-messages"][] = "В имени могут быть только буквы";
+            $isValidated = false;
+        }
         if (!empty($userByEmail)) {
             $_SESSION["register-messages"][] = "Пользователь с таким email уже существует";
             $isValidated = false;
