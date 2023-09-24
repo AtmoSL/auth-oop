@@ -15,21 +15,18 @@ class Model
     {
         $table = static::$table;
 
-        $fields = "";
-        $values = "";
+        $fields = array_keys($data);
+        $fieldsStr = implode(", ", $fields);
 
-        $countElements = count($data);
-        $counter = 0;
+        $stmt=DataBase::prepare("INSERT INTO `$table` ($fieldsStr) VALUES (?,?,?)");
 
-        foreach ($data as $field => $value) {
-            $counter++;
-            $fields .= "`" . $field . "`" . (($counter != $countElements) ? ", " : "");
-            $values .= "'" . $value . "'" . (($counter != $countElements) ? ", " : "");
+        $i = 1;
+        foreach ($data as $value){
+            $stmt->bindValue($i, $value);
+            $i++;
         }
 
-        $sql = "INSERT INTO `$table` ($fields) VALUES ($values)";
-
-        DataBase::query($sql);
+        $stmt->execute();
     }
 
     /**
@@ -54,10 +51,9 @@ class Model
             $whereStr .= static::$table . "." . $whereField . "= '" . $whereValue . "'". (($whereValue != end($where)) ? " AND " : "");
         }
 
-        $sql = "SELECT " . $fieldsSTR . " FROM " . static::$table . " WHERE " . $whereStr ;
+        $stmt=DataBase::prepare("SELECT " . $fieldsSTR . " FROM " . static::$table . " WHERE " . $whereStr);
 
-        $stmt = DataBase::query($sql);
-
+        $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_CLASS);
     }
